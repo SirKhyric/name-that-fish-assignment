@@ -1,41 +1,21 @@
 import "./styles/game-board.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
-
-function FunctionalGameBoard({ initialFishes, guessingResult, onGameOver }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const nextFishToName = initialFishes[currentIndex];
+function FunctionalGameBoard({ fishData, guessingResult }) {
   const [guess, setGuess] = useState("");
-  const [guessSubmitted, setGuessSubmitted] = useState(false);
-
 
   const handleGuessSubmit = (e) => {
     e.preventDefault();
-    if (!guessSubmitted) {
-      const guessedFish = guess.toLowerCase();
-      const isCorrectGuess = guessedFish === nextFishToName.name.toLowerCase();
-
-      guessingResult(isCorrectGuess, nextFishToName.name.toLowerCase());
-      
-      if (currentIndex < initialFishes.length - 1) {
-        setCurrentIndex(currentIndex + 1);
-      } else {
-        onGameOver();
-      }
-      setGuess("");
-      setGuessSubmitted(true); 
-    }
+    const guessedFish = guess.toLowerCase();
+    guessingResult(guessedFish);
+    setGuess("");
   };
-
-  useEffect(() => {
-    setGuessSubmitted(false);
-  }, [currentIndex]);
 
   return (
     <div id="game-board">
       <div id="fish-container">
-        <img src={nextFishToName.url} alt={nextFishToName.name} />
+        <img src={fishData.url} alt={fishData.name} />
       </div>
       <form id="fish-guess-form" onSubmit={handleGuessSubmit}>
         <label htmlFor="fish-guess">What kind of fish is this?</label>
