@@ -11,7 +11,7 @@ export function FunctionalApp() {
 
   const answersNumber = correctCount + incorrectCount;
   const gameOver = initialFishes.length === answersNumber;
-  const [answersLeft, setAnswersLeft] = useState(initialFishes.map(fish => fish.name));
+  const answersLeft = initialFishes.map(fish => fish.name).slice(answersNumber);
 
   const handleGuessResult = (answer) => {
     if (answer === initialFishes[answersNumber].name) {
@@ -19,7 +19,6 @@ export function FunctionalApp() {
     } else {
       setIncorrectCount(prevCount => prevCount + 1);
     }
-    setAnswersLeft(prevAnswersLeft => prevAnswersLeft.filter(fishName => fishName !== initialFishes[answersNumber].name));
   };
 
   return (
